@@ -23,30 +23,59 @@ class POSStats:
         """
         # WORK HERE!!
         # COLLECT REQUIRED STATISTICS INTO DICTIONARIES.
+        self._wcount = defaultdict(lambda: defaultdict(int))
+        self._tcount = defaultdict(lambda: defaultdict(int))
+        self._sentcount = 0
+
+        for sent in tagged_sents:
+            self._sentcount += 1
+            for word in sent:
+                self._wcount[word[0]][word[1]] += 1
+                self._tcount[word[1]][word[0]] += 1
 
     def sent_count(self):
         """Total number of sentences."""
         # WORK HERE!!
+        return self._sentcount
 
     def token_count(self):
         """Total number of tokens."""
         # WORK HERE!!
+        acum = 0
+        for word in self._wcount:
+            for tag in self._wcount[word]:
+                acum += self._wcount[word][tag]
+        return acum
 
     def words(self):
         """Vocabulary (set of word types)."""
         # WORK HERE!!
+        return self._wcount.keys()
 
     def word_count(self):
         """Vocabulary size."""
         # WORK HERE!!
+        return len(self.words())
 
     def word_freq(self, w):
         """Frequency of word w."""
         # WORK HERE!!
+        acum = 0
+        for tag in self._wcount[w]:
+            acum += self._wcount[w][tag]
+        return acum
 
     def unambiguous_words(self):
         """List of words with only one observed POS tag."""
         # WORK HERE!!
+        ans = set()
+        for word in self._wcount:
+            if len(self._wcount[word].keys()) == 1:
+                for tag in self._wcount[word]:
+                    if self._wcount[word][tag] > 0:
+                        ans.add(word)
+        return ans
+
 
     def ambiguous_words(self, n):
         """List of words with n different observed POS tags.
@@ -54,18 +83,32 @@ class POSStats:
         n -- number of tags.
         """
         # WORK HERE!!
+        ans = set()
+        for word in self._wcount:
+            if len(self._wcount[word].keys()) == n:
+                for tag in self._wcount[word]:
+                    if self._wcount[word][tag] > 0:
+                        break
+                ans.add(word)
+        return ans
 
     def tags(self):
         """POS Tagset."""
         # WORK HERE!!
+        return self._tcount.keys()
 
     def tag_count(self):
         """POS tagset size."""
         # WORK HERE!!
+        return len(self.tags())
 
     def tag_freq(self, t):
         """Frequency of tag t."""
         # WORK HERE!!
+        ans = 0
+        for word in self._tcount[t]:
+            ans += self._tcount[t][word]
+        return ans
 
     def tag_word_dict(self, t):
         """Dictionary of words and their counts for tag t."""
@@ -73,6 +116,7 @@ class POSStats:
 
 
 if __name__ == '__main__':
+
     opts = docopt(__doc__)
 
     # load the data
