@@ -31,7 +31,6 @@ class BadBaselineTagger:
         """
         return True
 
-
 class BaselineTagger:
 
     def __init__(self, tagged_sents, default_tag=None):
@@ -41,10 +40,14 @@ class BaselineTagger:
         """
         # WORK HERE!!
         self._default_tag = default_tag
-        self._wcount = defaultdict(lambda: defaultdict(int))
-
+        self._wcount = {}
+        
         for sent in tagged_sents:
             for word in sent:
+                if word[0] not in self._wcount:
+                    self._wcount[word[0]] = {}
+                if word[1] not in self._wcount[word[0]]:
+                    self._wcount[word[0]][word[1]] = 0
                 self._wcount[word[0]][word[1]] += 1
         
 
@@ -62,14 +65,14 @@ class BaselineTagger:
         """
         # WORK HERE!!
         ans = self._default_tag
-
+        
         if not self.unknown(w):
             max = 0
             for tag in self._wcount[w]:
                 if self._wcount[w][tag] > max:
                     max = self._wcount[w][tag]
                     ans = tag
-
+        
         return ans
 
 
@@ -80,3 +83,4 @@ class BaselineTagger:
         """
         # WORK HERE!!
         return not (w in self._wcount)
+        
