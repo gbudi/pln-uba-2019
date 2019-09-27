@@ -8,6 +8,7 @@ Options:
   -m <model>    Model to use [default: badbase]:
                   badbase: Bad baseline
                   base: Baseline
+                  class: Classifier
   -c <path>     Ancora corpus path.
   -o <file>     Output model file.
   -h --help     Show this screen.
@@ -17,11 +18,13 @@ import pickle
 
 from tagging.ancora import SimpleAncoraCorpusReader
 from tagging.baseline import BaselineTagger, BadBaselineTagger
+from tagging.classifier import ClassifierTagger
 
 
 models = {
     'badbase': BadBaselineTagger,
     'base': BaselineTagger,
+    'class': ClassifierTagger
 }
 
 
