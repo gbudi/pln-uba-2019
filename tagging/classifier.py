@@ -19,12 +19,19 @@ def feature_dict(sent, i):
     """
     # WORK HERE!!
     return {
-        'lower': sent[i].lower(),
-        'istitle': sent[i].istitle(),
-        'isupper': sent[i].isupper(),
-        'isdigit': sent[i].isdigit() 
+        'lower':    sent[i].lower(),
+        'istitle':  sent[i].istitle(),
+        'isupper':  sent[i].isupper(),
+        'isdigit':  sent[i].isdigit(),
+        'prev_lower':   sent[i-1].lower()   if (i > 0) else '',
+        'prev_istitle': sent[i-1].istitle() if (i > 0) else False,
+        'prev_isupper': sent[i-1].isupper() if (i > 0) else False,
+        'prev_isdigit': sent[i-1].isdigit() if (i > 0) else False,
+        'next_lower':   sent[i+1].lower()   if (i < len(sent) - 1) else '',
+        'next_istitle': sent[i+1].istitle() if (i < len(sent) - 1) else False,
+        'next_isupper': sent[i+1].isupper() if (i < len(sent) - 1) else False,
+        'next_isdigit': sent[i+1].isdigit() if (i < len(sent) - 1) else False,  
     }
-
 
 class ClassifierTagger:
     """Simple and fast classifier based tagger.
