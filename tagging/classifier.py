@@ -40,6 +40,7 @@ class ClassifierTagger:
             ('clf', MultinomialNB())
         ])
         self._words = set()
+        self.fit(tagged_sents)
 
     def fit(self, tagged_sents):
         """
@@ -51,11 +52,12 @@ class ClassifierTagger:
         X = []
         y_true = []
         for sent in tagged_sents:
+            word_sent = [word[0] for word in sent]
             for i in range(0, len(sent)):
-                x = feature_dict(sent, i)
+                x = feature_dict(word_sent, i)
                 X.append(x)
                 y_true.append(sent[i][1])
-                self._words.add(sent[i])
+                self._words.add(word_sent[i])
         
         self._pipe.fit(X, y_true)
 
@@ -74,7 +76,7 @@ class ClassifierTagger:
         """
         # WORK HERE!!
         X_test = [feature_dict(sent, i) for i in range(0,len(sent))]
-        ans = self._pipe.predict(X_test)[0]
+        ans = self._pipe.predict(X_test)
         return ans
 
     def unknown(self, w):
