@@ -11,28 +11,22 @@ classifiers = {
     'mnb': MultinomialNB
 }
 
+def word_features(sent, i, prefijo):
+    return {
+        (prefijo + 'lower'):        sent[i].lower()     if (i >= 0 and i < len(sent)) else '',
+        (prefijo + 'istitle'):      sent[i].istitle()   if (i >= 0 and i < len(sent)) else False,
+        (prefijo + 'isupper'):      sent[i].isupper()   if (i >= 0 and i < len(sent)) else False,
+        (prefijo + 'isdigit'):      sent[i].isdigit()   if (i >= 0 and i < len(sent)) else False,
+        (prefijo + 'isplural'):     sent[i][-1:] == 's' if (i >= 0 and i < len(sent)) else False,
+        #(prefijo + 'hashyphen'):    '-' in sent[i]      if (i >= 0 and i < len(sent)) else False,
+        #(prefijo + 'hasunderscore'): '_' in sent[i]     if (i >= 0 and i < len(sent)) else False,
+    }
 
 def feature_dict(sent, i):
-    """Feature dictionary for a given sentence and position.
-
-    sent -- the sentence.
-    i -- the position.
-    """
-    # WORK HERE!!
-    return {
-        'lower':    sent[i].lower(),
-        'istitle':  sent[i].istitle(),
-        'isupper':  sent[i].isupper(),
-        'isdigit':  sent[i].isdigit(),
-        'prev_lower':   sent[i-1].lower()   if (i > 0) else '',
-        'prev_istitle': sent[i-1].istitle() if (i > 0) else False,
-        'prev_isupper': sent[i-1].isupper() if (i > 0) else False,
-        'prev_isdigit': sent[i-1].isdigit() if (i > 0) else False,
-        'next_lower':   sent[i+1].lower()   if (i < len(sent) - 1) else '',
-        'next_istitle': sent[i+1].istitle() if (i < len(sent) - 1) else False,
-        'next_isupper': sent[i+1].isupper() if (i < len(sent) - 1) else False,
-        'next_isdigit': sent[i+1].isdigit() if (i < len(sent) - 1) else False,  
-    }
+    fdict = word_features(sent, i, '')
+    fdict.update(word_features(sent, i-1, 'prev_'))
+    fdict.update(word_features(sent, i+1, 'next_'))
+    return fdict
 
 class ClassifierTagger:
     """Simple and fast classifier based tagger.
