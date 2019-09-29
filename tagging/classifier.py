@@ -8,6 +8,7 @@ from sklearn.naive_bayes import MultinomialNB
 classifiers = {
     'lr': LogisticRegression,
     'svm': LinearSVC,
+    'mnb': MultinomialNB
 }
 
 
@@ -44,7 +45,7 @@ class ClassifierTagger:
         # WORK HERE!!
         self._pipe = Pipeline([
             ('vect', DictVectorizer()),
-            ('clf', MultinomialNB())
+            ('clf', classifiers[clf]())
         ])
         self._words = set()
         self.fit(tagged_sents)

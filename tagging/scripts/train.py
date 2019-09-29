@@ -9,6 +9,10 @@ Options:
                   badbase: Bad baseline
                   base: Baseline
                   class: Classifier
+  --clf <class> Classifier model [default: lr]:
+                  lr: Logistic Regression
+                  svm: Linear SVC
+                  mnb: Multinomial NB
   -c <path>     Ancora corpus path.
   -o <file>     Output model file.
   -h --help     Show this screen.
@@ -38,7 +42,7 @@ if __name__ == '__main__':
 
     # train the model
     model_class = models[opts['-m']]
-    model = model_class(sents)
+    model = model_class(sents, opts['--clf']) if (opts['-m'] == 'class') else model_class(sents)
 
     # save it
     filename = opts['-o']
