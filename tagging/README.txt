@@ -97,4 +97,40 @@ y el contador descriptos anteriormente.
     - rg:       Advervio general
     - cc:       Conjunción coordinante
 
-    ---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------
+Ejercicio 2:
+
+    Se le dió a la clase BaselineTagger las siguientes variables:
+
+    - default_tag: Guarda el tag que se asignará a las palabras desconocidas.
+    - wcount: Análogo al wcount del Ejercicio 1. La diferencia es que se usan diccionarios normales en
+    lugar de defaultdicts debido a que estos últimos producían un error con pickle para guardar 
+    el modelo.
+
+    Para decidir el tag a asignar a una palabra w se itera wcount buscando el tag con más apariciones para 
+    dicha w, en el caso de que w sea conocida. Si w es desconocida, se le asigna default_tag. Para 
+    etiquetar una oración, simplemente se devuelve como lista el resultado de etiquetar cada palabra de
+    de la manera antes descrita.
+
+    Los resultados obtenidos con este modelo fueron los siguientes:
+
+    ---------------------------------------------------------------------------------------
+    Accuracy: 85.79% / 95.27% / 0.00% (total / known / unk)
+
+    g \ m   sp000   nc0s000 da0000  aq0000  fc      nc0p000 rg      np00000 fp      cc
+    sp000   14.28   0.00    -       -       -       -       0.01    -       -       -
+    nc0s000 0.00    10.43   -       0.25    -       0.00    0.03    0.00    -       0.00
+    da0000  -       -       9.54    -       -       -       -       -       -       -
+    aq0000  0.01    0.24    -       4.84    -       0.13    0.00    -       -       -
+    fc      -       -       -       -       5.85    -       -       -       -       -
+    nc0p000 -       0.00    -       0.20    -       4.09    -       -       -       -
+    rg      0.02    0.02    -       0.04    -       -       3.27    -       -       0.02
+    np00000 0.00    0.01    -       0.00    -       0.00    -       1.52    -       0.00
+    fp      -       -       -       -       -       -       -       -       3.55    -
+    cc      0.00    0.00    -       -       -       -       0.05    0.00    -       3.34
+    ---------------------------------------------------------------------------------------
+
+    Se ve que este simple clasificador se desempeña decentemente para palabras conocidas pero muy mal para 
+    palabras desconocidas.
