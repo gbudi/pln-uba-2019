@@ -11,6 +11,12 @@ classifiers = {
     'mnb': MultinomialNB
 }
 
+def tilde(sent):
+    pos_tildes = {'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú'} 
+    sent_chars = set(sent)
+    return not sent_chars.isdisjoint(pos_tildes) 
+
+
 def word_features(sent, i, prefijo):
     return {
         (prefijo + 'lower'):        sent[i].lower()     if (i >= 0 and i < len(sent)) else '',
@@ -20,6 +26,9 @@ def word_features(sent, i, prefijo):
         (prefijo + 'isplural'):     sent[i][-1:] == 's' if (i >= 0 and i < len(sent)) else False,
         #(prefijo + 'hashyphen'):    '-' in sent[i]      if (i >= 0 and i < len(sent)) else False,
         #(prefijo + 'hasunderscore'): '_' in sent[i]     if (i >= 0 and i < len(sent)) else False,
+        #(prefijo + 'mente'):        sent[i][-5:] == 'mente' if (i >= 0 and i < len(sent)) else False,
+        (prefijo + 'isshort'):      len(sent[i]) < 4    if (i >= 0 and i < len(sent)) else False,
+        (prefijo + 'tilde'):        tilde(sent[i])      if (i >= 0 and i < len(sent)) else False
     }
 
 def feature_dict(sent, i):
