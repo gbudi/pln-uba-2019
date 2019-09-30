@@ -134,3 +134,68 @@ Ejercicio 2:
 
     Se ve que este simple clasificador se desempeña decentemente para palabras conocidas pero muy mal para 
     palabras desconocidas.
+---------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------
+Ejercicio 3:
+
+    A la clase ClassifierTagger se le dieron los siguientes atributos:
+
+    - pipe: Un pipeline formado por un DictVectorizer y un classifier. El classifier puede ser uno entre:
+        - LogisticRegression
+        - LinearSVC
+        - MultinomialNB
+        
+        Mediante el parámetro clf se elige cual de ellos usar. Al script train se le agregó la opción 
+        --clf para poder elegirlo desde la línea de comandos.
+    
+    - words: Conjunto que guardará el vocavulario conocido.
+
+
+    Para la parte de los features pedidos simplemente se utilizaron las funciones lower(), istitle(), 
+    isupper() e isdigit(). Dado que el esqueleto de la función que construye el diccionario de features
+    recibía una oración y un índice, se utilizó el mismo índice incrementado y decrementado para obtener 
+    los features de la palabra siguiente y anterior respectivamente, teniendo cuidado de consultar dentro 
+    de las posiciones válidas.
+
+    De las tagged_sents, se separaron los diccionarios de features y los tags correctos para entrenar al
+    pipeline del modelo.  
+
+    A continuación se muestran tiempo de entrenamiento, tiempo de evaluación y resultados obtenidos para
+    los features pedidos y los distintos classifiers:
+
+    - LogisticRegression:
+        
+        Ejemplo de uso:
+        python tagging/scripts/train.py -c ancora-3.0.1es -m class --clf lr -o class_lr
+        python tagging/scripts/eval.py -c ancora-3.0.1es -i class_lr -p
+
+        Entrenamiento:  8m38s
+        Evaluación:     4.55s
+        Resultados:     Accuracy: 91.69% / 95.01% / 61.68% (total / known / unk)
+
+    - LinearSVC:
+
+        Ejemplo de uso:
+        python tagging/scripts/train.py -c ancora-3.0.1es -m class --clf svm -o class_svm
+        python tagging/scripts/eval.py -c ancora-3.0.1es -i class_svm -p
+
+        Entrenamiento:  2m42s
+        Evaluación:     4.79s
+        Resultados:     Accuracy: 94.11% / 97.57% / 62.76% (total / known / unk)
+
+    - MultinomialNB:
+
+        Ejemplo de uso:
+        python tagging/scripts/train.py -c ancora-3.0.1es -m class --clf mnb -o class_mnb
+        python tagging/scripts/eval.py -c ancora-3.0.1es -i class_mnb -p
+
+        Entrenamiento:  16.68s
+        Evaluación:     1m47.96s
+        Resultados:     Accuracy: 84.28% / 88.07% / 49.99% (total / known / unk)
+
+---------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------
+Ejercicio 4:
+
