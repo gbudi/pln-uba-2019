@@ -199,3 +199,69 @@ Ejercicio 3:
 ---------------------------------------------------------------------------------------------------------
 Ejercicio 4:
 
+    En la notebook analisis_error.ipynb está el código usado para estudiar los errores cometidos por el 
+    modelo y los resultados de los nuevos features propuestos. A continuación los describo de manera 
+    resumida:
+
+    Aclaración: Todos los features mencionados se implementaron tanto para la palabra actual, como para la 
+    anterior y la siguiente.
+
+    - Uno de los errores más grandes era confundir sustantivos plurales y singulares. Para esto se
+    pensó en un feature que me dice si una palabra termina con 's' o no. Se agregó entonces al diccioario 
+    ese feature. 
+
+    Resultados:     Accuracy: 94.49% / 97.59% / 66.42% (total / known / unk)
+
+    Se preservó este feature para el resto del análisis pues se obtuvieron buenos resultados.
+
+
+    - Otro error observado era confundir sustantivos propios con comunes. Dado que ya se estaba observando 
+    si la letra inicial de la palabra es mayúscula (que es la idea más inmediata), se observaron algunos 
+    ejemplos de las oraciones mal etiquetadas con este error. Se observó que muchos nombres propios mal
+    etiquetados contenian guiones bajos y algunos guiones medios. Se agregaron entonces dos features que 
+    determinen si una palabra tiene estos guiones y se los evaluaron juntos y por separado:
+
+    Resultados (bajos):     Accuracy: 94.18% / 97.28% / 66.08% (total / known / unk)
+    Resultados (medios):    Accuracy: 94.49% / 97.59% / 66.41% (total / known / unk)
+    Resultados (ambos):     Accuracy: 94.18% / 97.28% / 66.08% (total / known / unk)
+
+    Como ninguna combinación mejoró el desempeño del modelo, se decidió no conservar estos features.
+
+
+    - Un feature agregao por intuición fue si la longitud de la palabra es "chicha" (se tomó menor a 4 letras).
+    Esto fue bajo los artículos por ejemplo, suelen ser palabras cortas y quizás observar esto podía aportar 
+    información sobre el rol de una palabra.
+
+    Resultados:     Accuracy: 94.53% / 97.59% / 66.81% (total / known / unk)
+
+    El rendimiento sobre palabras desconocidas mejora levemente, y como no se reduce el rendimiento global, 
+    se decidió conservar el feature.
+
+
+    - El error más presente es confundir adjetivos y sustantivos. Es el más presente pues se cometía en 
+    ambas direcciones (confundir adjetivos por sustantivos y sustantivos por adjetivos) y se comete para 
+    ambos tipos de sustantivos (propios y comunes). Luego de observar ejemplos de oraciones mal etiquetadas
+    con este error, no se vió alguna propiedad que pueda explotarse como fueature, pero sí ocurrió que 
+    varios sustantivos mal etiquetados llevaban tilde. Esto no significa que conozca una relación entre las
+    tildes y si una palabra es un adjetivo o un sustantivo, pero sí es una característica del castellano que 
+    valdría la pensa observar. Se implemento un feature que me diga si una palabra lleva tilde.
+
+    Resultados:     Accuracy: 94.65% / 97.60% / 67.96% (total / known / unk)
+
+    Este feature mejoró el rendimiento global (y particularmente sobre palabras desconocidas) con lo cual se 
+    decidió dejar.
+
+
+    Habiendo conseguido un accuracy de casi el 70% sobre palabras desconocidas y sin ideas que permitan 
+    distinguir adjetivo de sustantivos.
+
+    Hay que aclarar que una idea que se formó mientras se veían ejemplos de errores de etiquetado de adjetivos 
+    confundidos con sustantivos, fue la de observar si la palabra tiene algún sufijo específico. Por ejemplo, 
+    -al, -ado, etc. Pero al observador el error en el otro sentido, sustantivos confundidos con adjetivos, se 
+    vieron ejemplos de sustantivos con esas terminaciones (que podrían también ser adjetivos). Por ejemplo, 
+    personal, pasado, etc. Ante el temor de estar implementando un feature que sirve solo para los casos de prueba 
+    y dado que la proporción de estos errores no era tan grande como los ejemplos vistos en clase, se decidió no 
+    hacer dicha implementación.
+
+---------------------------------------------------------------------------------------------------------
+
