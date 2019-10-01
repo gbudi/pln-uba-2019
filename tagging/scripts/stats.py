@@ -6,6 +6,7 @@ Usage:
 
 Options:
   -h --help     Show this screen.
+  -c <path>     Ancora corpus path.
 """
 from docopt import docopt
 from collections import defaultdict
@@ -87,7 +88,7 @@ class POSStats:
         for word in self._wcount:
             if len(self._wcount[word].keys()) == n:
                 for tag in self._wcount[word]:
-                    if self._wcount[word][tag] > 0:
+                    if self._wcount[word][tag] == 0:
                         break
                 ans.add(word)
         return ans
