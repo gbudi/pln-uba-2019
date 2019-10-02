@@ -3,6 +3,7 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
+from tagging.fasttext import FasttextDictVectorizer
 
 
 classifiers = {
@@ -28,7 +29,7 @@ def word_features(sent, i, prefijo):
         #(prefijo + 'hasunderscore'): '_' in sent[i]     if (i >= 0 and i < len(sent)) else False,
         #(prefijo + 'mente'):        sent[i][-5:] == 'mente' if (i >= 0 and i < len(sent)) else False,
         (prefijo + 'isshort'):      len(sent[i]) < 4    if (i >= 0 and i < len(sent)) else False,
-        (prefijo + 'tilde'):        tilde(sent[i])      if (i >= 0 and i < len(sent)) else False
+        (prefijo + 'tilde'):        tilde(sent[i])      if (i >= 0 and i < len(sent)) else False,
     }
 
 def feature_dict(sent, i):
@@ -46,6 +47,13 @@ class ClassifierTagger:
         clf -- classifying model, one of 'svm', 'lr' (default: 'lr').
         """
         # WORK HERE!!
+        '''
+        keys = list(feature_dict('h', 0).keys())
+        self._pipe = Pipeline([
+            ('vect', FasttextDictVectorizer('../cc.es.300.bin', keys)),
+            ('clf', classifiers[clf]())
+        ])
+        '''
         self._pipe = Pipeline([
             ('vect', DictVectorizer()),
             ('clf', classifiers[clf]())
