@@ -24,6 +24,7 @@ def word_features(sent, i, prefijo):
         (prefijo + 'istitle'):      sent[i].istitle()   if (i >= 0 and i < len(sent)) else False,
         (prefijo + 'isupper'):      sent[i].isupper()   if (i >= 0 and i < len(sent)) else False,
         (prefijo + 'isdigit'):      sent[i].isdigit()   if (i >= 0 and i < len(sent)) else False,
+        # Agregados (o no) en el ejercicio 4
         (prefijo + 'isplural'):     sent[i][-1:] == 's' if (i >= 0 and i < len(sent)) else False,
         #(prefijo + 'hashyphen'):    '-' in sent[i]      if (i >= 0 and i < len(sent)) else False,
         #(prefijo + 'hasunderscore'): '_' in sent[i]     if (i >= 0 and i < len(sent)) else False,

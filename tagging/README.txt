@@ -97,6 +97,14 @@ y el contador descriptos anteriormente.
     - rg:       Advervio general
     - cc:       Conjunción coordinante
 
+    Ejemplo de uso:
+    python tagging/scripts/stats.py -c ancora-3.0.1es
+
+    ACLARACION:
+        - ancora-3.0.1es es el path al corpus en la máquina donde se hicieron las pruebas. El mismo 
+        deberá reemplazarse por su correspondiente en caso de no ubicar el corpus en la carpeta bajada 
+        del repo.
+
 ---------------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------------------
@@ -133,7 +141,8 @@ Ejercicio 2:
     ---------------------------------------------------------------------------------------
 
     Se ve que este simple clasificador se desempeña decentemente para palabras conocidas pero muy mal para 
-    palabras desconocidas.
+    palabras desconocidas. Los errores más presentes son confundir adjetivos con sustantivos y viceversa.
+    
 ---------------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------------------
@@ -193,6 +202,15 @@ Ejercicio 3:
         Entrenamiento:  16.68s
         Evaluación:     1m47.96s
         Resultados:     Accuracy: 84.28% / 88.07% / 49.99% (total / known / unk)
+
+    ACLARACIONES:
+        - Los tiempos se tomaron en un computadora con Ubunto 18.04, i5 4440 y 8GB DDR3 de RAM.
+        - ancora-3.0.1es es el path al corpus en la máquina donde se hicieron las pruebas. El mismo 
+        deberá reemplazarse por su correspondiente en caso de no ubicar el corpus en la carpeta bajada 
+        del repo.
+        - La versión actual del clasificador tiene features agregdos en el ejercicio 4, por lo que los 
+        resultados podrían no coincidir con los acá mostrados. Se pueden comentar los nuevos features
+        (señalizados en el código) para recrear estos resultados.
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -265,3 +283,8 @@ Ejercicio 4:
 
 ---------------------------------------------------------------------------------------------------------
 
+---------------------------------------------------------------------------------------------------------
+Ejercicio 5:
+
+    Se descargó un modelo pre-entrenado para el español del enlace en la página de la materia, pero se 
+presentan errores al intentar leer el mismo. 

@@ -1,6 +1,8 @@
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
-from fastText import load_model
+# Daba error con la T mayuscula
+# from fastText import load_model
+from fasttext import load_model
 
 
 class FasttextDictVectorizer(BaseEstimator, TransformerMixin):
